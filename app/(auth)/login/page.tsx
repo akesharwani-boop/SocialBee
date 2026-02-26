@@ -1,3 +1,5 @@
+<<<<<<< Updated upstream
+=======
 "use client";
 
 import { useFormik } from "formik";
@@ -8,21 +10,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Mail, Lock, Github } from "lucide-react";
 import toast from "react-hot-toast";
-
+import { loginSchema } from "@/validation/login.schema";
+import { FormError } from "@/components/ui/form-error";
 export default function LoginPage() {
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-      password: Yup.string()
-        .min(6, "Minimum 6 characters")
-        .required("Password is required"),
-    }),
+    validationSchema: loginSchema,
     onSubmit: async (values) => {
       try {
         console.log(values);
@@ -57,9 +53,10 @@ export default function LoginPage() {
                   value={formik.values.email}
                 />
               </div>
-              {formik.touched.email && formik.errors.email && (
-                <p className="text-red-500 text-xs">{formik.errors.email}</p>
-              )}
+              <FormError
+                touched={formik.touched.email}
+                error={formik.errors.email}
+              />
             </div>
 
             <div className="space-y-2">
@@ -76,9 +73,10 @@ export default function LoginPage() {
                   value={formik.values.password}
                 />
               </div>
-              {formik.touched.password && formik.errors.password && (
-                <p className="text-red-500 text-xs">{formik.errors.password}</p>
-              )}
+              <FormError
+                touched={formik.touched.password}
+                error={formik.errors.password}
+              />
             </div>
 
             <Button
@@ -119,3 +117,4 @@ export default function LoginPage() {
     </div>
   );
 }
+>>>>>>> Stashed changes
