@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api= axios.create({// ye mera custom axios instance hai 
-    baseURL: '',
+    baseURL:  process.env.NEXT_PUBLIC_API_URL,
     headers:{
         'Content-Type': 'application/json',// server ko bataungi mai data json format men bhejungi 
     },
@@ -10,3 +10,19 @@ const api= axios.create({// ye mera custom axios instance hai
 export default api
 
 //axios mera https request ke liye use ghoga 
+
+// axios.interceptors.request.use(function (config) {
+   
+//     return config;
+//   }, function (error) {
+   
+//     return Promise.reject(error);
+//   },
+//   { synchronous: true, runWhen: () =>() /* This function returns true */}
+// );
+// axios.interceptors.response.use  (function onFullfilled(response){
+//     return response 
+// },function  onRejected(error){
+//     console.log(error)
+//     return Promise.reject(error)
+// })
