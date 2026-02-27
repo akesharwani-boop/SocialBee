@@ -10,21 +10,25 @@ import { Mail, Lock, User, Github } from "lucide-react";
 import toast from "react-hot-toast";
 import { signupSchema } from "@/validation/signup.schema";
 import { FormError } from "@/components/ui/form-error";
+import { useSignup } from "@/hooks/useSignup";
 export default function SignupPage() {
+  const{mutate,isPending}= useSignup()
   const formik = useFormik({
     initialValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
+      age: "",
     },
     validationSchema: signupSchema,
-    onSubmit: async (values) => {
-      try {
-        console.log(values);
-        toast.success("Account Created Successfully 🎉");
-      } catch (error) {
-        toast.error("Something went wrong");
-      }
+   
+    onSubmit:  (values) => {
+      
+      mutate({
+        ...values,
+        age:Number(values.age)
+      })
     },
   });
 
@@ -41,22 +45,42 @@ export default function SignupPage() {
 
           <form onSubmit={formik.handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <Label>Name</Label>
+              <Label>firstName</Label>
               <div className="relative">
                 <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                 <Input
                   type="text"
-                  name="name"
-                  placeholder="John Doe"
+                  name="firstName"
+                  placeholder="John "
                   className="pl-10"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.name}
+                  value={formik.values.firstName}
                 />
               </div>
               <FormError
-                touched={formik.touched.name}
-                error={formik.errors.name}
+                touched={formik.touched.firstName}
+                error={formik.errors.firstName}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>lastName</Label>
+              <div className="relative">
+                <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Input
+                  type="text"
+                  name="lastName"
+                  placeholder=" Doe"
+                  className="pl-10"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.lastName}
+                />
+              </div>
+              <FormError
+                touched={formik.touched.lastName}
+                error={formik.errors.lastName}
               />
             </div>
 
@@ -99,12 +123,31 @@ export default function SignupPage() {
                 error={formik.errors.password}
               />
             </div>
-
+            <div className="space-y-2">
+              <Label>age</Label>
+              <div className="relative">
+                <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Input
+                  type="number"
+                  name="age"
+                  placeholder="write your age ..."
+                  className="pl-10"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.age}
+                />
+              </div>
+              <FormError
+                touched={formik.touched.age}
+                error={formik.errors.age}
+              />
+            </div>
             <Button
               type="submit"
               className="w-full bg-green-600 hover:bg-green-700 text-white"
             >
               Sign Up
+              {isPending ? "Creating Account" : ""}
             </Button>
 
             <div className="flex items-center gap-3">
