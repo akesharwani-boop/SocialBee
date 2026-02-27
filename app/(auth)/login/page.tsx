@@ -1,5 +1,4 @@
-<<<<<<< Updated upstream
-=======
+
 "use client";
 
 import { useFormik } from "formik";
@@ -117,4 +116,4 @@ export default function LoginPage() {
     </div>
   );
 }
->>>>>>> Stashed changes
+
